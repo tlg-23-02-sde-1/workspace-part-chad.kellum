@@ -2,10 +2,7 @@ package com.entertainment.client;
 
 import com.entertainment.*;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 class TelevisionClient {
 
@@ -14,8 +11,8 @@ class TelevisionClient {
 
         Television tvA = new Television("Sony", 50);
         Television tvB = new Television("Sony", 50);
-        Television tvC = new Television("Samsung", 47);
-        Television tvD = new Television("LG", 52);
+        Television tvC = new Television("Sony", 52);
+        Television tvD = new Television("Sony", 12);
 
         System.out.println("tvA == tvB: " + (tvA == tvB)); // always false
         System.out.println("tvA.equals(tvB)" + tvA.equals(tvB)); // true now that we added custom equals method

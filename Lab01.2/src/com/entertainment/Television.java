@@ -3,6 +3,12 @@ package com.entertainment;
 import java.util.Comparator;
 import java.util.Objects;
 
+/*
+ * Natural order is defined by 'brand' (String) and volume (int) when tied on brand.
+ * To be "consistent with equals," our sort key(s) must align with what was chosen.
+ * for equals() and hashCode().
+ */
+
 public class Television implements Comparable<Television> {
     private String brand;
     private int volume;
@@ -81,8 +87,15 @@ public class Television implements Comparable<Television> {
 //        return getBrand().length() + getVolume();
         return Objects.hash(getBrand(), getVolume());
     }*/
-    public int compareTo (Television other){
-        return this.getBrand().compareTo(other.getBrand());
+    public int compareTo (Television other){  // consistency with equals() to fix TreeSet
+        int result = this.getBrand().compareTo(other.getBrand());
+
+        if (result == 0) {
+            result = Integer.compare(this.getVolume(), other.getVolume());
+        }
+
+        return result;
+
     }
 
     public String toString() {
