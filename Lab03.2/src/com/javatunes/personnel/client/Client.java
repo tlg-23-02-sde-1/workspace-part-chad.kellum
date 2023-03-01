@@ -27,7 +27,7 @@ public class Client {
     
     // add HourlyEmployees and SalariedEmployees to it
     dept.addEmployee(new HourlyEmployee("Lonnie",   Date.valueOf("2015-03-31"), 35.0, 40.0));
-    dept.addEmployee(new HourlyEmployee("Martin",   Date.valueOf("2011-02-17"), 25.0, 20.0));
+    dept.addEmployee(new HourlyEmployee("Martin",   Date.valueOf("2011-02-17"), 25.0, 35.0));
     dept.addEmployee(new SalariedEmployee("Lauren", Date.valueOf("1997-04-08"), 50000.0));
     dept.addEmployee(new SalariedEmployee("Jason",  Date.valueOf("1990-08-24"), 34000.0));
     
