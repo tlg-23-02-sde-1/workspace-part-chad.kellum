@@ -9,19 +9,21 @@
 package com.entertainment.catalog;
 
 import static org.junit.Assert.*;
+
 import java.util.Collection;
+
 import org.junit.Test;
 import com.entertainment.Television;
 
 public class CatalogTest {
-  
-  /**
-   * Contract: a no-matches result should be an empty collection (not null).
-   */
-  @Test
-  public void testFindByBrandNoMatches() {
-    Collection<Television> tvs = Catalog.findByBrand("NO-MATCHES");
-    assertNotNull(tvs);
-    assertTrue(tvs.isEmpty());
-  }
+
+    /**
+     * Contract: a no-matches result should be an empty collection (not null).
+     */
+    @Test
+    public void testFindByBrandNoMatches() {
+        Collection<Television> tvs = Catalog.findByBrand("NO-MATCHES");
+        assertNotNull(tvs);
+        assertTrue(tvs.isEmpty());
+    }
 }
