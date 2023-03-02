@@ -120,6 +120,10 @@ public class InMemoryCatalog implements Catalog {
      */
     public Collection<MusicItem> findSelfTitled() {
         Collection<MusicItem> result = new ArrayList<>();
+        for (MusicItem item : catalogData)
+            if (item.getTitle().equals(item.getArtist())) {
+                result.add(item);
+            }
 
         return result;
     }
@@ -127,7 +131,7 @@ public class InMemoryCatalog implements Catalog {
     /**
      * TASK: find all "rock" items whose price is less than or equal to the specified price.
      */
-    public Collection<MusicItem> rockBottom(double maxPrice) {
+    public Collection<MusicItem> findRockBottom(double maxPrice) {
         Collection<MusicItem> result = new ArrayList<>();
 
         return result;
