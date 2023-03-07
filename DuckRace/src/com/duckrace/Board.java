@@ -66,14 +66,16 @@ class Board {
      * TODO: Make the results line up with columns and headings
      */
 
-    public void show() {  // values returns the right hand side of the Map
+    public String show() {  // values returns the right hand side of the Map
 
         Collection<DuckRacer> allRacers = racerMap.values(); //return Collection<V> (right side is V)
         for (DuckRacer racer : allRacers){
-            System.out.println(racer); // toString() automatically called
+            return String.format("%s: ID= %s15, Name= %s15, Wins= %s15, Rewards= %s15 ", getClass(), racer);
+                // toString() automatically called
 
         }
 
+        return null;
     }
 
     // TESTING ONLY - will probably be removed
@@ -106,5 +108,6 @@ class Board {
 
         return idMap;
     }
+
 
 }

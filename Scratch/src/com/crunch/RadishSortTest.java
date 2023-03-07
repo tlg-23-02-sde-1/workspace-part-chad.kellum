@@ -17,14 +17,37 @@ class RadishSortTest {
         radishes.add(new Radish("black",2.2, 4.2, 0));
         radishes.add(new Radish("white", 1.8, 1.5, 7));
 
+        System.out.println("original list");
         dump(radishes);
         System.out.println();
 
+        System.out.println("sort by natural order (size)");
         radishes.sort(null); // passing null means natural order
         dump(radishes);
         System.out.println();
 
+        System.out.println("sort by color, via Comparator");
         radishes.sort(new RadishColorComparator());
+        dump(radishes);
+        System.out.println();
+
+        System.out.println("sort by tailLength, via anonymous class");
+        radishes.sort( new Comparator<Radish>() {
+            @Override
+            public int compare(Radish r1, Radish r2) {
+                return Double.compare(r1.getTailLength(), r2.getTailLength());
+            }
+        });
+        dump(radishes);
+        System.out.println();
+
+        System.out.println("sort by sprouts, via anonymous class");
+        radishes.sort(new Comparator<Radish>() {
+            @Override
+            public int compare(Radish r1, Radish r2) {
+                return Integer.compare(r1.getSprouts(), r2.getSprouts());
+            }
+        });
         dump(radishes);
         System.out.println();
     }
