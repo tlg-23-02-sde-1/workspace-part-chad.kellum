@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"com.fastjava.annotation","c":"Fast","l":"comment()"},{"p":"com.fastjava.annotation","c":"Fast","l":"fast()"},{"p":"com.fastjava.annotation","c":"Fast","l":"value()"}]
