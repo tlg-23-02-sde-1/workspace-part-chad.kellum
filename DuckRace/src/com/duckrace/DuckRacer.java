@@ -23,12 +23,6 @@ class DuckRacer {
     public void win(Reward reward) {
         rewards.add(reward);
     }
-//    public void addDuckRacer(){
-//        if () {
-//
-//        }
-//
-
 
 
     public int getId() {

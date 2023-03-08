@@ -68,9 +68,12 @@ class Board {
 
     public String show() {  // values returns the right hand side of the Map
 
+
+
         Collection<DuckRacer> allRacers = racerMap.values(); //return Collection<V> (right side is V)
         for (DuckRacer racer : allRacers){
-            return String.format("%s: ID= %s15, Name= %s15, Wins= %s15, Rewards= %s15 ", getClass(), racer);
+            System.out.printf("%s        %s        %s,      %s\n",
+                    racer.getId(), racer.getName(), racer.getWins(), racer.getRewards() );
                 // toString() automatically called
 
         }
