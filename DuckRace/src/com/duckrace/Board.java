@@ -1,6 +1,6 @@
 package com.duckrace;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -8,11 +8,11 @@ import java.util.*;
 /*
  * This is a lookup table of ids to student names.
  * When a duck wins for the first time, we need to find out who that is.
- * This lookup table could be hardcoded with the data, or we could read the data 
+ * This lookup table could be hardcoded with the data, or we could read the data
  * in from a file, so that no code changes would need to be made for each cohort.
  *
  * Map<Integer,String> studentIdMap;
- * 
+ *
  * Integer    String
  * =======    ======
  *    1       John
@@ -21,7 +21,7 @@ import java.util.*;
  *    4       Armando
  *    5       Sheila
  *    6       Tess
- * 
+ *
  *
  * We also need a data structure to hold the results of all winners.
  * This data structure should facilitate easy lookup, retrieval, and storage by ID.
@@ -38,9 +38,29 @@ import java.util.*;
  *   17       17    Dom        1    DEBIT_CARD
  */
 
-public class Board {
-    private final Map<Integer,String> studentIdMap = loadStudentIdMap();
-    private final Map<Integer,DuckRacer> racerMap  = new TreeMap<>();
+public class Board implements Serializable {
+    private final Map<Integer, String> studentIdMap = loadStudentIdMap();
+    private final Map<Integer, DuckRacer> racerMap = new TreeMap<>();
+    private static final String dataFilePath = "data/board.dat";
+
+    public static Board getInstance() {
+        Board board = null;
+
+        if (Files.exists(Path.of(dataFilePath))) {
+            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFilePath))) {
+                board = (Board) in.readObject();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+
+            }
+        } else {
+            board = new Board();
+
+        }
+        return board;
+
+    }
 
     /*
      * Updates the board (racerMap) by making a DuckRacer win.
@@ -49,18 +69,18 @@ public class Board {
      * and then make it win.
      */
 
-    public void update(int id, Reward reward){
-       DuckRacer racer = null;
+    public void update(int id, Reward reward) {
+        DuckRacer racer = null;
 
-        if (racerMap.containsKey(id)){
+        if (racerMap.containsKey(id)) {
             racer = racerMap.get(id); // fetch existing
 
-        }
-        else {
+        } else {
             racer = new DuckRacer(id, studentIdMap.get(id));
             racerMap.put(id, racer);  // put it in map (easy to forget this step)
         }
         racer.win(reward);
+        save();
     }
     /*
      * TODO: Make the results line up with columns and headings
@@ -68,12 +88,11 @@ public class Board {
 
     public String show() {  // values returns the right hand side of the Map
 
-        if (racerMap.isEmpty()){
+        if (racerMap.isEmpty()) {
             System.out.println("There are currently no winners in the board");
             System.out.println();
 
-        }
-        else {
+        } else {
 
             System.out.println("               Duck Race Results");
             System.out.println();
@@ -81,9 +100,9 @@ public class Board {
             System.out.println("=======================================================");
 
             Collection<DuckRacer> allRacers = racerMap.values(); //return Collection<V> (right side is V)
-            for (DuckRacer racer : allRacers){
+            for (DuckRacer racer : allRacers) {
                 System.out.printf("%5s        %s        %5s      %15s\n",
-                        racer.getId(), racer.getName(), racer.getWins(), racer.getRewards() );
+                        racer.getId(), racer.getName(), racer.getWins(), racer.getRewards());
                 // toString() automatically called
 
             }
@@ -93,7 +112,7 @@ public class Board {
     }
 
     // TESTING ONLY - will probably be removed
-    void dumpStudentIdMap(){
+    void dumpStudentIdMap() {
         System.out.println(studentIdMap);
     }
 
@@ -105,7 +124,7 @@ public class Board {
         Map<Integer, String> idMap = new HashMap<>();
 
         try {
-            List<String> lines = Files.readAllLines(Path.of("conf/student-ids.csv"));
+            List<String> lines = Files.readAllLines(Path.of("conf/student-ids.csv")); // make static
 
             // for each line in lines, we want to split the string into 'tokens'
             for (String line : lines) {
@@ -124,4 +143,16 @@ public class Board {
     }
 
 
+    public int maxId() {
+        return studentIdMap.size();
+    }
+
+    private void save() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dataFilePath))) {
+            out.writeObject(this);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

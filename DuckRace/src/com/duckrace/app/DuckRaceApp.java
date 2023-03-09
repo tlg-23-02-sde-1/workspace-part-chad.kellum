@@ -13,8 +13,9 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class DuckRaceApp {
-    private Board board = new Board();
+    private Board board = Board.getInstance();
     private Scanner scanner = new Scanner(System.in);
+    private final int maxId = board.maxId();
 
     public void execute(){
         welcome();
@@ -55,7 +56,8 @@ public class DuckRaceApp {
 
         boolean validInput = false;
         while (!validInput) {
-            System.out.print("Please enter ID of the winner [1-14]: ");  //TODO, no hardcode 14, add method to Board, maxID
+            System.out.println();
+            System.out.print("Please enter ID of the winner [1-" + maxId + "]: ");  //TODO, no hardcode 14, add method to Board, maxID
             String input = scanner.nextLine().trim();  //BLOCKS for input
             if (input.matches("\\d{1,2}")) {      // any digit, one or two times
                 id = Integer.parseInt(input);          // now you can safely parseInt()
